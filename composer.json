@@ -1,0 +1,17 @@
+{
+    "name": "brunobwn/simple-php-crud",
+    "description": "A simple PHP CRUD with MariaDB",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Brunobwn\\SimplePhpCrud\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "brunobwn",
+            "email": "brunoberwian@gmail.com"
+        }
+    ],
+    "require": {}
+}
