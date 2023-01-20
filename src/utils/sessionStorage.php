@@ -2,10 +2,10 @@
 
 function setSession($key, $data)
 {
-    $_SESSION[$key] = json_encode($data);
+    $_SESSION[$key] = serialize($data);
 }
 
 function getSession($key)
 {
-    return json_decode($_SESSION[$key]);
+    return unserialize($_SESSION[$key]);
 }
