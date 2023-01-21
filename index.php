@@ -71,6 +71,3 @@ if (isset($_POST['email']) && isset($_POST['password']) && !$auth->isAuthenticat
     </body>
 
 </html>
-<?php
-$mysqli->close();
-?>

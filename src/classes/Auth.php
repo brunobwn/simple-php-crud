@@ -3,9 +3,8 @@ session_start();
 
 // define secret to remember-me option
 define('TOKEN_SECRET', '8Tt389v9DwnUGhc6QVo');
-class Auth
+class Auth extends Base
 {
-    private $conn;
     private $userId;
     private $name;
     private $email;
@@ -14,8 +13,7 @@ class Auth
 
     public function __construct()
     {
-        // Conecta ao banco de dados
-        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+        parent::__construct();
 
         if (isset($_SESSION['userId']) && isset($_SESSION['name']) && isset($_SESSION['email']) && isset($_SESSION['picture'])) {
             $this->userId = $_SESSION['userId'];

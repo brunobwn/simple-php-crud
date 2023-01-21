@@ -1,15 +1,7 @@
 <?php
 
-class Todos
+class Todos extends Base
 {
-    private $conn;
-
-    public function __construct()
-    {
-        // Conecta ao banco de dados
-        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
-    }
-
     public function getAll()
     {
         return $this->conn->query("SELECT * FROM todos");
