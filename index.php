@@ -1,33 +1,21 @@
 <?php
-session_start();
-date_default_timezone_set("America/Sao_Paulo");
-require('./src/database/config.php');
-require('./src/utils/sessionStorage.php');
-require('./src/utils/auth.php');
+require(dirname(__FILE__) . '/loader.php');
 
-if (isset($_POST['email']) && isset($_POST['password']) && !isset($_SESSION['user'])) {
-    $error['message'] = '';
+$error['message'] = '';
+$auth = new Auth();
+
+if (isset($_POST['email']) && isset($_POST['password']) && !$auth->isAuthenticated()) {
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
+    $login = $auth->login($email, $password);
 
-    $stmt = $mysqli->prepare("SELECT * FROM users WHERE email= ? LIMIT 1");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_object();
-        if (password_verify($password, $user->password)) {
-            setSession('user', $user);
-            echo 'logou';
-        }
-    } else {
+    if (!$login) {
         $error['message'] = 'Usuário ou senha inválidos';
+    } else {
+        echo 'logouuuuu';
     }
 }
 
-if (isset($_SESSION['user'])) {
-    $userLogado = getSession('user');
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +34,7 @@ if (isset($_SESSION['user'])) {
 
     <body class="bg-light min-h-100">
         <?php
-    if (!isLoggedIn()) {
+    if (!$auth->isAuthenticated()) {
         include('./src/pages/login.php');
     } else {
         include('./src/pages/home.php');
