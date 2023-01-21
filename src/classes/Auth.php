@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+// define secret to remember-me option
+define('TOKEN_SECRET', '8Tt389v9DwnUGhc6QVo');
 class Auth
 {
     private $conn;
@@ -25,10 +27,6 @@ class Auth
 
     public function login($email, $password)
     {
-        $error['message'] = '';
-        $email = $_POST['email'] ?? null;
-        $password = $_POST['password'] ?? null;
-
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE email= ? LIMIT 1");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -57,6 +55,8 @@ class Auth
 
     public function logout()
     {
+        // invalida cookie de lembrar
+        setcookie('login_data', null, -1, '/', null, null, true);
         session_destroy();
     }
 

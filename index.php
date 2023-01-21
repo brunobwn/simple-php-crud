@@ -4,14 +4,30 @@ require(dirname(__FILE__) . '/loader.php');
 $error['message'] = '';
 $auth = new Auth();
 
+// verifica se possui cookie de lembrar login
+if (isset($_COOKIE['login_data'])) {
+    $decrypted = decryptLogin();
+    if (!is_null($decrypted) && isset($decrypted['email']) && isset($decrypted['password'])) {
+        $auth->login($decrypted['email'], $decrypted['password']);
+    }
+}
+
 if (isset($_POST['email']) && isset($_POST['password']) && !$auth->isAuthenticated()) {
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
     $login = $auth->login($email, $password);
 
+    if (isset($_POST['remember_me']) && $_POST['remember_me'] === '1') {
+        $token = encryptLogin($email, $password);
+        // Definir o cookie 7 dias expiração
+        setcookie('login_data', $token, time() + (60 * 60 * 24 * 7), '/', null, null, true);
+    }
+
     if (!$login) {
         $error['message'] = 'Usuário ou senha inválidos';
     }
+
+    unset($_POST);
 }
 
 ?>
@@ -26,10 +42,10 @@ if (isset($_POST['email']) && isset($_POST['password']) && !$auth->isAuthenticat
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-            crossorigin="anonymous">
+            crossorigin="anonymous" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-avatar@latest/dist/avatar.min.css"
-            rel="stylesheet">
-        <link rel="stylesheet" href="./src/styles/global.css" type="text/css">
+            rel="stylesheet" />
+        <link rel="stylesheet" href="src/styles/global.css" />
     </head>
 
     <body class="bg-light min-h-100">

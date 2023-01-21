@@ -1,4 +1,5 @@
 <?php require('./src/components/navbar.php'); ?>
+<hr class="colorgraph mt-0" />
 <div class="container">
     <table class="table">
         <thead>
