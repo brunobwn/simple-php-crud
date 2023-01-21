@@ -27,7 +27,9 @@ if (isset($_POST['email']) && isset($_POST['password']) && !$auth->isAuthenticat
             rel="stylesheet"
             integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
             crossorigin="anonymous">
-        <link rel="stylesheet" href="./styles/global.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-avatar@latest/dist/avatar.min.css"
+            rel="stylesheet">
+        <link rel="stylesheet" href="./src/styles/global.css" type="text/css">
     </head>
 
     <body class="bg-light min-h-100">
@@ -49,6 +51,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && !$auth->isAuthenticat
             integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
             crossorigin="anonymous">
         </script>
+        <script type="text/javascript" src="./src/js/app.js"></script>
     </body>
 
 </html>
