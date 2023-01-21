@@ -1,6 +1,5 @@
+<?php require('./src/components/navbar.php'); ?>
 <div class="container">
-    <button class="position-absolute end-0 top-0 m-4 btn btn-outline-secondary"
-        onClick="window.location = './logout.php'">Logout</button>
     <table class="table">
         <thead>
             <tr>
