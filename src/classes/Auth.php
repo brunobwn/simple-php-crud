@@ -69,4 +69,19 @@ class Auth
     {
         return $this->userId;
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getPicture()
+    {
+        return ($this->picture) ? $this->picture : 'https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg';
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
 }
