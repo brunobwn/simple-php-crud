@@ -11,8 +11,6 @@ if (isset($_POST['email']) && isset($_POST['password']) && !$auth->isAuthenticat
 
     if (!$login) {
         $error['message'] = 'Usuário ou senha inválidos';
-    } else {
-        echo 'logouuuuu';
     }
 }
 

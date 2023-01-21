@@ -12,7 +12,6 @@
         </thead>
         <tbody>
             <?php
-            echo $auth->getUserId();
             $todos = new Todos();
             $todos = $todos->getAllByUserId($auth->getUserId());
             if ($todos) :
@@ -32,8 +31,15 @@
                     <?= (!is_null($row['editedAt'])) ? date_format(date_create($row['editedAt']), 'd/m/Y') : '--/--/----'; ?>
                 </td>
             </tr>
-            <?php endforeach;
-            endif; ?>
+            <?php
+                endforeach;
+            else : ?>
+            <tr>
+                <td colspan="4">Você ainda não cadastrou nenhuma tarefa 😢</td>
+            </tr>
+            <?php
+            endif;
+            ?>
         </tbody>
     </table>
 </div>
