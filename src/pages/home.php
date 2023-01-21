@@ -13,7 +13,7 @@
             <?php
             $todos = new Todos();
             $todos = $todos->getAllByUserId($auth->getUserId());
-            if ($todos) :
+            if ($todos->num_rows > 0) {
                 foreach ($todos as $row) :
             ?>
             <tr>
@@ -32,12 +32,14 @@
             </tr>
             <?php
                 endforeach;
-            else : ?>
+            } else { ?>
             <tr>
-                <td colspan="4">Você ainda não cadastrou nenhuma tarefa 😢</td>
+                <td colspan="4" class="fw-light text-center">Você não tem tarefas 😢 <br /> Que tal
+                    cadastrar a sua primeira?
+                </td>
             </tr>
             <?php
-            endif;
+            }
             ?>
         </tbody>
     </table>
