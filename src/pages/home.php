@@ -14,7 +14,7 @@
             <?php
             $todos = new Todos();
             $todos = $todos->getAllByUserId($auth->getUserId());
-            if ($todos->num_rows > 0) {
+            if (count($todos) > 0) {
                 foreach ($todos as $row) :
             ?>
             <tr>

@@ -5,7 +5,7 @@ $error['message'] = '';
 $auth = new Auth();
 
 // verifica se possui cookie de lembrar login
-if (isset($_COOKIE['login_data'])) {
+if (isset($_COOKIE['login_data']) && !$auth->isAuthenticated()) {
     $decrypted = decryptLogin();
     if (!is_null($decrypted) && isset($decrypted['email']) && isset($decrypted['password'])) {
         $auth->login($decrypted['email'], $decrypted['password']);

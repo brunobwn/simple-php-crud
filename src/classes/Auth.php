@@ -21,16 +21,14 @@ class Auth extends Base
 
     public function login($email, $password)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email= ? LIMIT 1");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
 
-        $result = $stmt->get_result();
-        if ($result->num_rows == 0) {
+        if ($stmt->rowCount() == 0) {
             return false;
         }
 
-        $user = $result->fetch_object();
+        $user = $stmt->fetchObject();
         if (!password_verify($password, $user->password)) {
             return false;
         }
