@@ -1,5 +1,5 @@
 <?php
-require(dirname(__FILE__) . '/loader.php');
+require('src/config/config.php');
 
 $auth = new Auth();
 $auth->logout();

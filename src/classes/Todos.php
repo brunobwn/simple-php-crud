@@ -1,5 +1,4 @@
 <?php
-
 class Todos extends Base
 {
     public function getAll()
