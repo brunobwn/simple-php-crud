@@ -2,7 +2,7 @@
     <div class="row min-vh-100">
         <div
             class="col-xs-12 col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4 my-auto">
-            <form role="form" method="post">
+            <form action="?action=login" role="form" method="post">
                 <h2>Acesso ao sistema</h2>
                 <hr class="colorgraph" />
                 <?php if (isset($error['message'])) : ?>
@@ -27,8 +27,8 @@
                 <hr class="colorgraph" />
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <button href="" class="btn btn-secondary w-100" type="button"
-                            disabled>Register</button>
+                        <a href="?pg=register" class="btn btn-secondary w-100" type="button">Criar
+                            conta</a>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 mt-2 mt-sm-0">
                         <button type="submit" class="btn btn-success  w-100"

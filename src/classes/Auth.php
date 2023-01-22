@@ -52,6 +52,27 @@ class Auth extends Base
         session_destroy();
     }
 
+    public function create($email, $password, $name, $picture = '')
+    {
+        $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+        if ($email == '') {
+            return [false, 'E-mail inválido'];
+        }
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        // verifica se email já esta cadastrado
+        $stmt = $this->conn->prepare('SELECT email FROM users WHERE email = ?');
+        $stmt->execute([$email]);
+        if ($stmt->rowCount() > 0) {
+            return [false, 'Este e-mail já está em uso'];
+        }
+        $query = $this->conn->prepare('INSERT INTO `users` VALUES (null, ?, ?, ?, ?, null, null)');
+        $res = $query->execute([$email, $password, $name, $picture]);
+        if (!$res) {
+            return [false, 'Erro ao cadastrar, tente novamente mais tarde'];
+        }
+        return [true];
+    }
+
     public function isAuthenticated()
     {
         return isset($_SESSION['userId']);
