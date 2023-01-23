@@ -51,7 +51,8 @@ if ($action == 'save') {
             <div class="form-group flex-grow-1">
                 <input type="text" name="description" id="description" class="form-control input-lg"
                     placeholder="Descrição da tarefa"
-                    value="<?= ($action == 'create') ? null : $todoEdit['description'] ?>" />
+                    value="<?= ($action == 'create') ? null : $todoEdit['description'] ?>"
+                    required />
                 <input type="hidden" name="id"
                     value="<?= ($action == 'create') ? null :  $todoId; ?>">
             </div>

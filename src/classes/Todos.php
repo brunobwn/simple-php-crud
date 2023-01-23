@@ -26,7 +26,7 @@ class Todos extends Base
 
     public function create($userId, $description, $completed = 0)
     {
-        if (is_null($userId) || is_null($description)) return [false, 'Preencha todos os campos'];
+        if (is_null($userId) || is_null($description) || $description == '') return [false, 'Preencha todos os campos'];
         $query = $this->conn->prepare("INSERT INTO todos (userId, description, completed) VALUES (?, ?, ?)");
         $res = $query->execute([$userId, $description, $completed]);
         return ($res) ? [true] : [false, 'Erro interno do servidor, tente novamente mais tarde'];
@@ -53,7 +53,7 @@ class Todos extends Base
 
     public function update($todoId, $userId, $description)
     {
-        if (is_null($userId) || is_null($todoId)) return [false, 'Preencha todos os campos'];
+        if (is_null($userId) || is_null($todoId) || $description == '') return [false, 'Preencha todos os campos'];
         $userId = strval($userId);
         $query = $this->conn->prepare('SELECT userId FROM todos WHERE todoId = ?');
         $query->execute([$todoId]);
