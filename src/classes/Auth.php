@@ -13,8 +13,8 @@ class Auth extends Base
 
         if (isset($_SESSION['userId']) && isset($_SESSION['name']) && isset($_SESSION['email']) && isset($_SESSION['picture'])) {
             $this->userId = $_SESSION['userId'];
-            $this->email = $_SESSION['name'];
-            $this->name = $_SESSION['email'];
+            $this->email = $_SESSION['email'];
+            $this->name = $_SESSION['name'];
             $this->picture = $_SESSION['picture'];
         }
     }
