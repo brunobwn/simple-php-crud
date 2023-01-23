@@ -85,7 +85,7 @@ if ($action == 'save') {
                 </thead>
                 <tbody>
                     <?php
-                    $todosByUser = $todos->getAllByUserId($auth->getUserId());
+                    $todosByUser = array_reverse($todos->getAllByUserId($auth->getUserId()));
                     if (count($todosByUser) > 0) {
                         foreach ($todosByUser as $row) :
                     ?>
