@@ -50,4 +50,23 @@ class Todos extends Base
         $res = $query->execute([$completed, $todoId]);
         return ($res) ? [true] : [false, 'Erro interno do servidor, tente novamente mais tarde'];
     }
+
+    public function delete($todoId, $userId)
+    {
+        if (is_null($userId) || is_null($todoId)) return [false, 'Preencha todos os campos'];
+        $userId = strval($userId);
+        $query = $this->conn->prepare('SELECT userId, completed FROM todos WHERE todoId = ?');
+        $query->execute([$todoId]);
+        $todo = $query->fetch();
+        if (!$todo) {
+            return [false, 'Tarefa não encontrada'];
+        }
+        if ($todo['userId'] != $userId) {
+            return [false, 'Você não tem permissão para deletar esta tarefa'];
+        }
+        $completed = ($todo['completed'] == 0) ? '1' : '0';
+        $query = $this->conn->prepare('DELETE FROM `todos` WHERE `todoId` = ?');
+        $res = $query->execute([$todoId]);
+        return ($res) ? [true] : [false, 'Erro interno do servidor, tente novamente mais tarde'];
+    }
 }

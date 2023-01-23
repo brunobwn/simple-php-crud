@@ -17,6 +17,14 @@ if ($action == 'edit') {
     }
 }
 
+if ($action == 'delete') {
+    $todoId = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_URL);
+    $toggleTodo = $todos->delete($todoId, $auth->getUserId());
+    if (!$toggleTodo[0]) {
+        $error['message'] = $toggleTodo[1];
+    }
+}
+
 ?>
 <hr class="colorgraph mt-0" />
 <div class="container">
@@ -26,17 +34,19 @@ if ($action == 'edit') {
         <div class="col-12">
             <h5><?= ($action == 'create') ? 'Novo' : 'Editar'; ?> registro</h5>
         </div>
-        <div class="col-12 col-lg-9">
-            <div class="form-group">
+        <div class="col-12 d-flex flex-column flex-md-row gap-2">
+            <div class="form-group flex-grow-1">
                 <input type="text" name="description" id="description" class="form-control input-lg"
-                    placeholder="Descrição da tarefa" value="<?= $todoEdit['description'] ?>" />
-                <input type="hidden" name="id" value="<?= $todoId; ?>">
+                    placeholder="Descrição da tarefa"
+                    value="<?= ($action == 'create') ? null : $todoEdit['description'] ?>" />
+                <input type="hidden" name="id"
+                    value="<?= ($action == 'create') ? null :  $todoId; ?>">
             </div>
-        </div>
-        <div class="col-12 col-lg-3 mt-2 mt-lg-0 d-flex gap-2 justify-content-end">
-            <a href="?pg=home" class="btn btn-secondary">Cancelar</a>
-            <button type="submit"
-                class="btn btn-success"><?= ($action == 'create') ? 'Cadastrar' : 'Editar'; ?></button>
+            <div class="form-group d-flex justify-content-end gap-2">
+                <a href="?pg=home" class="btn btn-secondary">Cancelar</a>
+                <button type="submit"
+                    class="btn btn-success"><?= ($action == 'create') ? 'Cadastrar' : 'Editar'; ?></button>
+            </div>
         </div>
     </form>
     <?php
@@ -81,9 +91,11 @@ if ($action == 'edit') {
                         </td>
                         <td class="d-flex flex-nowrap gap-2">
                             <a href="?pg=home&action=delete&id=<?= $row['todoId']; ?>"
-                                class="btn btn-danger"><i class="fa fa-trash d-md-none"
-                                    aria-hidden="true"></i><span
-                                    class="d-none d-md-inline">Apagar</span></a>
+                                class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#excluirModal"
+                                onclick="handleDeleteButton(<?= $row['todoId']; ?>);">
+                                <i class="fa fa-trash d-md-none" aria-hidden="true"></i>
+                                <span class="d-none d-md-inline">Apagar</span></a>
                             <a href="?pg=home&action=edit&id=<?= $row['todoId']; ?>"
                                 class="btn btn-primary"><i class="fa fa-pencil-square-o d-md-none"
                                     aria-hidden="true"></i><span
@@ -106,5 +118,26 @@ if ($action == 'edit') {
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="excluirModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" action="?pg=home&action=delete" method="post">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar exclusão?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Esta operação não pode ser desfeita.</p>
+                <input type="hidden" name="id" id="inputIdModal">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Excluir</button>
+            </div>
+        </form>
     </div>
 </div>
