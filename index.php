@@ -66,6 +66,8 @@ if ($action == "register" && ($_SERVER['REQUEST_METHOD'] === 'POST')) {
             crossorigin="anonymous" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-avatar@latest/dist/avatar.min.css"
             rel="stylesheet" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="src/styles/global.css" />
     </head>
 
