@@ -18,10 +18,23 @@ if ($action == 'edit') {
 }
 
 if ($action == 'delete') {
-    $todoId = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_URL);
+    $todoId = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_ADD_SLASHES);
     $toggleTodo = $todos->delete($todoId, $auth->getUserId());
     if (!$toggleTodo[0]) {
         $error['message'] = $toggleTodo[1];
+    }
+}
+
+if ($action == 'save') {
+    $todoId = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_ADD_SLASHES);
+    $todoDescription = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_ADD_SLASHES);
+    if ($todoId == '') {
+        $resTodo = $todos->create($auth->getUserId(), $todoDescription);
+    } else {
+        $resTodo = $todos->update($todoId, $auth->getUserId(), $todoDescription);
+    }
+    if (!$resTodo[0]) {
+        $error['message'] = $resTodo[1];
     }
 }
 
@@ -77,7 +90,7 @@ if ($action == 'delete') {
                         foreach ($todosByUser as $row) :
                     ?>
                     <tr data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Criado em: <?= date_format(date_create($row['createdAt']), 'd/m/Y'); ?> | Última edição: <?= (!is_null($row['editedAt'])) ? date_format(date_create($row['editedAt']), 'd/m/Y') : '--/--/----'; ?>">
+                        title="Criado em: <?= date_format(date_create($row['createdAt']), 'd/m/Y'); ?> Última edição: <?= (!is_null($row['editedAt'])) ? date_format(date_create($row['editedAt']), 'd/m/Y') : '--/--/----'; ?>">
                         <td
                             class="table-cell-fit <?= ($row['completed'] == 1) ? 'text-decoration-line-through' : ''; ?>">
                             <?= $row['description']; ?>
